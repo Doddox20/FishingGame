@@ -59,12 +59,12 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Image backgroundImage = new Image("Plan.jpg");
+        Image backgroundImage = new Image("Plan.png");
         ImageView backgroundImageView = new ImageView(backgroundImage);
-        backgroundImageView.setViewport(new Rectangle2D(0, 0, 1920, 1080));
+        backgroundImageView.setViewport(new Rectangle2D(0, 0, 1080, 720));
         StackPane stackPane = new StackPane();
         stackPane.getChildren().add(backgroundImageView);
-        scene = new Scene(stackPane, 1920, 1080);
+        scene = new Scene(stackPane, 1080, 720);
 
         MenuPrincipal = new Rectangle(100, 100, 640, 360);
         ImagePattern pattern = new ImagePattern(new Image("Tableau.png"));
