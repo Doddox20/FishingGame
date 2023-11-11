@@ -40,6 +40,8 @@ public class App extends Application {
     private Label labelStartClick;
     private Player player;
     private EventHandler eventHandler;
+    private StackPane stackPane;
+    private double totalBackgroundHeight;
 
     private void setupButtonInteraction(Button button) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), button);
@@ -63,26 +65,20 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-<<<<<<< HEAD
-        Image backgroundImage = new Image("Plan.png");
-        ImageView backgroundImageView = new ImageView(backgroundImage);
-        backgroundImageView.setViewport(new Rectangle2D(0, 0, 1080, 720));
-        StackPane stackPane = new StackPane();
-        stackPane.getChildren().add(backgroundImageView);
-        scene = new Scene(stackPane, 1080, 720);
-=======
         Image backgroundImage = new Image("background.png");
         ImageView backgroundImageView = new ImageView(backgroundImage);
-        backgroundImageView.setViewport(new Rectangle2D(0, 0, 1024, 720));
-        StackPane stackPane = new StackPane();
+        totalBackgroundHeight = backgroundImage.getHeight();
+        backgroundImageView.setViewport(new Rectangle2D(0, 0, 1024, 720 ));
+        stackPane = new StackPane();
         stackPane.getChildren().add(backgroundImageView);
         scene = new Scene(stackPane, 1024, 720);
->>>>>>> 8c608bdb8bd89696339b854ff97bcfbbe46cd71f
 
         MenuPrincipal = new Rectangle(100, 100, 640, 360);
         ImagePattern pattern = new ImagePattern(new Image("Tableau.png"));
         MenuPrincipal.setFill(pattern);
         stage.setTitle("Fishing Supremacy");
+        scene.setFill(Color.rgb(86,191,239));
+
 
         buttonBox = new VBox(20);
         buttonBox.setAlignment(Pos.CENTER);
@@ -156,6 +152,8 @@ public class App extends Application {
                 AnimationTimer timer = new AnimationTimer() {
                     public void handle(long now) {
                         player.setPositionY(player.getPositionY() + 1);
+                        
+                       FollowCharacter();
                     }
                 };
                 timer.start();
@@ -170,5 +168,26 @@ public class App extends Application {
     public void update() {
         player.update(eventHandler);
     }
+
+    public void FollowCharacter() {
+        double playerPosY = player.getPositionY();
+        double offsetFactor = playerPosY ;
+
+        offsetFactor = Math.min(totalBackgroundHeight - 720, Math.max(0, offsetFactor));
+        stackPane.setTranslateY(-offsetFactor);
+        
+        Rectangle2D viewport = new Rectangle2D(0, offsetFactor, 1024, 720);
+        ((ImageView) stackPane.getChildren().get(0)).setViewport(viewport);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }
