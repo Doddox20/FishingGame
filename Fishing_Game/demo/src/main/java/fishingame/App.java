@@ -1,5 +1,6 @@
 package fishingame;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.ScaleTransition;
@@ -8,6 +9,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -36,6 +38,8 @@ public class App extends Application {
     private Rectangle MenuPrincipal;
     private VBox buttonBox;
     private Label labelStartClick;
+    private Player player;
+    private EventHandler eventHandler;
 
     private void setupButtonInteraction(Button button) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), button);
@@ -59,12 +63,21 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+<<<<<<< HEAD
         Image backgroundImage = new Image("Plan.png");
         ImageView backgroundImageView = new ImageView(backgroundImage);
         backgroundImageView.setViewport(new Rectangle2D(0, 0, 1080, 720));
         StackPane stackPane = new StackPane();
         stackPane.getChildren().add(backgroundImageView);
         scene = new Scene(stackPane, 1080, 720);
+=======
+        Image backgroundImage = new Image("background.png");
+        ImageView backgroundImageView = new ImageView(backgroundImage);
+        backgroundImageView.setViewport(new Rectangle2D(0, 0, 1024, 720));
+        StackPane stackPane = new StackPane();
+        stackPane.getChildren().add(backgroundImageView);
+        scene = new Scene(stackPane, 1024, 720);
+>>>>>>> 8c608bdb8bd89696339b854ff97bcfbbe46cd71f
 
         MenuPrincipal = new Rectangle(100, 100, 640, 360);
         ImagePattern pattern = new ImagePattern(new Image("Tableau.png"));
@@ -79,6 +92,10 @@ public class App extends Application {
 
         setupButtonInteraction(ButtonStart);
         setupButtonInteraction(ButtonExit);
+
+        this.player = new Player(5);
+        stackPane.getChildren().add(player.sprite);
+        this.eventHandler = new EventHandler(this, player);
 
         labelStartClick = new Label("Press SPACE to Fish !");
         labelStartClick.setStyle("-fx-font-size: 50; -fx-text-fill: Black; -fx-font-weight: bold;");
@@ -108,15 +125,8 @@ public class App extends Application {
 
         stage.setScene(scene);
         stage.show();
-        new EventHandler(this).pollEvents(scene);
-    }
 
-    public void handleKeyPressed(String text) {
-        if ("ESCAPE".equals(text)) {
-            MenuPrincipal.setVisible(true);
-            buttonBox.setVisible(true);
-            labelStartClick.toBack();
-        }
+        eventHandler.pollEvents(scene);
     }
 
     private Button createButton(String imagePath) {
@@ -129,8 +139,36 @@ public class App extends Application {
         return button;
     }
 
+    public void handleKeyPressed(KeyCode keycode){
+        switch(keycode) {
+            case ESCAPE:
+                MenuPrincipal.setVisible(true);
+                buttonBox.setVisible(true);
+                labelStartClick.toBack();
+                break;
+            case Q:
+                player.setPositionX(player.getPositionX() - player.getSpeed());
+                break;
+            case D:
+                player.setPositionX(player.getPositionX() + player.getSpeed());
+                break;
+            case SPACE:
+                AnimationTimer timer = new AnimationTimer() {
+                    public void handle(long now) {
+                        player.setPositionY(player.getPositionY() + 1);
+                    }
+                };
+                timer.start();
+                break;
+        }
+    }
+
     public static void main(String[] args) {
         launch();
+    }
+
+    public void update() {
+        player.update(eventHandler);
     }
 
 }
