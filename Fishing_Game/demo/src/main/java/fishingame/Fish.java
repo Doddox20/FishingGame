@@ -11,6 +11,7 @@ public abstract class Fish {
     protected int positionX;
     protected int positionY;
     protected int speed;
+    protected int value;
 
     public int getPositionX(){
         return positionX;
@@ -27,11 +28,13 @@ public abstract class Fish {
         this.positionY = positionY;
     }
 
-    public Fish(String filepath, int positionX, int positionY, int speed) {
+    public Fish(String filepath, int positionX, int positionY, int speed, int value) {
         spriteSheet = new Image(filepath);
         sprite = new ImageView(spriteSheet);
         sprite.setTranslateX(positionX);
         sprite.setTranslateY(positionY);
+        this.speed = speed;
+        this.value = value;
     }
 
 

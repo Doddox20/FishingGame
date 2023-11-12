@@ -15,10 +15,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.util.Duration;
@@ -38,10 +40,13 @@ public class App extends Application {
     private Rectangle MenuPrincipal;
     private VBox buttonBox;
     private Label labelStartClick;
+    private Label moneyCount;
+    private ImageView moneySymbolView;
     private Player player;
     private EventHandler eventHandler;
     private StackPane stackPane;
     private double totalBackgroundHeight;
+    private int banque = 0;
 
     private void setupButtonInteraction(Button button) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), button);
@@ -95,14 +100,29 @@ public class App extends Application {
 
         labelStartClick = new Label("Press SPACE to Fish !");
         labelStartClick.setStyle("-fx-font-size: 50; -fx-text-fill: Black; -fx-font-weight: bold;");
-
         labelStartClick.setVisible(false);
+
+        moneyCount = new Label("Pesos: " + banque);
+        moneyCount.setStyle("-fx-font-size: 30; -fx-text-fill: White; -fx-font-weight: bold;");
+        moneyCount.setVisible(false);
+        Image moneySymbol = new Image("sousou.png");
+        ImageView moneySymbolView = new ImageView(moneySymbol);
+        moneySymbolView.setVisible(false);
+
+        StackPane.setAlignment(moneyCount, Pos.TOP_RIGHT);
+        StackPane.setMargin(moneyCount, new Insets(20, 300, 10, 10));
+        StackPane.setAlignment(moneySymbolView, Pos.TOP_RIGHT);
+        StackPane.setMargin(moneySymbolView, new Insets(10, 240, 10, 10));
+        
 
         ButtonStart.setOnAction(event -> {
             MenuPrincipal.setVisible(false);
             buttonBox.setVisible(false);
             labelStartClick.toFront();
             labelStartClick.setVisible(true);
+            moneyCount.toFront();
+            moneyCount.setVisible(true);
+            moneySymbolView.setVisible(true);
 
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.seconds(0.5), new KeyValue(labelStartClick.visibleProperty(), false)),
@@ -117,7 +137,7 @@ public class App extends Application {
         });
 
         buttonBox.getChildren().addAll(ButtonStart, ButtonExit);
-        stackPane.getChildren().addAll(MenuPrincipal, buttonBox, labelStartClick);
+        stackPane.getChildren().addAll(MenuPrincipal, buttonBox, labelStartClick, moneyCount, moneySymbolView);
 
         stage.setScene(scene);
         stage.show();
@@ -141,6 +161,7 @@ public class App extends Application {
                 MenuPrincipal.setVisible(true);
                 buttonBox.setVisible(true);
                 labelStartClick.toBack();
+                moneyCount.toBack();
                 break;
             case Q:
                 player.setPositionX(player.getPositionX() - player.getSpeed());
@@ -151,6 +172,7 @@ public class App extends Application {
             case SPACE:
                 AnimationTimer timer = new AnimationTimer() {
                     public void handle(long now) {
+                        labelStartClick.setVisible(false);
                         player.setPositionY(player.getPositionY() + 1);
                         
                        FollowCharacter();
@@ -179,15 +201,4 @@ public class App extends Application {
         Rectangle2D viewport = new Rectangle2D(0, offsetFactor, 1024, 720);
         ((ImageView) stackPane.getChildren().get(0)).setViewport(viewport);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 }
