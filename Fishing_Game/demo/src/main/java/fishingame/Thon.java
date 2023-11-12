@@ -1,12 +1,12 @@
-package fishingame;
+// package fishingame;
 
-public class Thon extends Fish{
+// public class Thon extends Fish{
 
-    public Thon(){
-        super("", 0, 0, 5, 25);
-    }
+//     public Thon(){
+//         super("", 0, 0, 5, 25);
+//     }
 
-    @Override
-    public void update(EventHandler eventHandler){   
-    }
-}
+//     @Override
+//     public void update(EventHandler eventHandler){   
+//     }
+// }

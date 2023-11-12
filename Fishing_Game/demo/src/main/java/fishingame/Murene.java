@@ -1,12 +1,12 @@
-package fishingame;
+// package fishingame;
 
-public class Murene extends Fish{
+// public class Murene extends Fish{
 
-    public Murene(){
-        super("", 0, 0, 100, 5);
-    }
+//     public Murene(){
+//         super("", 0, 0, 100, 5);
+//     }
 
-    @Override
-    public void update(EventHandler eventHandler){   
-    }
-}
+//     @Override
+//     public void update(EventHandler eventHandler){   
+//     }
+// }

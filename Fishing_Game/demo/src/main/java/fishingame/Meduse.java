@@ -2,10 +2,19 @@ package fishingame;
 
 public class Meduse extends Fish{
 
-    public Meduse(){
-        super("", 0, 0, 5, 1);
+    public Meduse(int positionX, int positionY){
+        super("meduse.png", positionX, positionY, 5, 1);  
     }
 
+    @Override
+    public void swimming(){
+        if (this.getPositionX() < 0) {
+            this.setPositionX(this.getPositionX() + getSpeed());
+        }
+        else {
+            this.setPositionX(this.getPositionX() - getSpeed());
+        }
+    }
     @Override
     public void update(EventHandler eventHandler){   
     }

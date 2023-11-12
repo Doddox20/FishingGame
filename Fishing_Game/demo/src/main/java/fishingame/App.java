@@ -113,7 +113,15 @@ public class App extends Application {
         StackPane.setMargin(moneyCount, new Insets(20, 300, 10, 10));
         StackPane.setAlignment(moneySymbolView, Pos.TOP_RIGHT);
         StackPane.setMargin(moneySymbolView, new Insets(10, 240, 10, 10));
-        
+
+
+        /*Implementation Meduses*/
+        Meduse meduse1 = new Meduse(-250, 450);
+        stackPane.getChildren().add(meduse1.sprite);
+        Meduse meduse2 = new Meduse(250, 450);
+        stackPane.getChildren().add(meduse2.sprite);
+        Meduse meduse3 = new Meduse(0, 600);
+        stackPane.getChildren().add(meduse3.sprite);
 
         ButtonStart.setOnAction(event -> {
             MenuPrincipal.setVisible(false);
@@ -174,8 +182,7 @@ public class App extends Application {
                     public void handle(long now) {
                         labelStartClick.setVisible(false);
                         player.setPositionY(player.getPositionY() + 1);
-                        
-                       FollowCharacter();
+                        FollowCharacter();
                     }
                 };
                 timer.start();

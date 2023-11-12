@@ -1,7 +1,9 @@
 package fishingame;
 
+import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 
 public abstract class Fish {
 
@@ -12,12 +14,16 @@ public abstract class Fish {
     protected int positionY;
     protected int speed;
     protected int value;
+    protected AnimationTimer timer;
 
     public int getPositionX(){
         return positionX;
     }
     public int getPositionY(){
         return positionY;
+    }
+    public int getSpeed(){
+        return speed;
     }
     public void setPositionX(int positionX){
         sprite.setTranslateX(positionX);
@@ -35,9 +41,27 @@ public abstract class Fish {
         sprite.setTranslateY(positionY);
         this.speed = speed;
         this.value = value;
+        timer = new AnimationTimer() {
+            public void handle(long now){
+                swimming();
+            }
+        };
     }
 
+    public void handleKeyPressed(KeyCode keycode){
+        switch(keycode) {
+            case SPACE:
+                System.out.println("Timer is running!");
+                timer.start();
+                break;
+            case ESCAPE:
+                System.out.println("Timer stopped!");
+                timer.stop();
+                break;
+        }
+    }
 
+    public abstract void swimming();
 
     public abstract void update(EventHandler eventHandler);
 }
