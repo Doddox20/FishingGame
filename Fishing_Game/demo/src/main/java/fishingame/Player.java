@@ -32,6 +32,7 @@ public class Player {
     public Player(int speed) {
         spriteSheet = new Image("hamecon.png");
         sprite = new ImageView(spriteSheet);
+        sprite.setVisible(false);
         sprite.setTranslateX(16);
         sprite.setTranslateY(180);
         this.speed = speed;

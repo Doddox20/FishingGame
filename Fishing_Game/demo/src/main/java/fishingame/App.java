@@ -79,7 +79,7 @@ public class App extends Application {
         scene = new Scene(stackPane, 1024, 720);
 
         MenuPrincipal = new Rectangle(100, 100, 640, 360);
-        ImagePattern pattern = new ImagePattern(new Image("Tableau.png"));
+        ImagePattern pattern = new ImagePattern(new Image("tableau.png"));
         MenuPrincipal.setFill(pattern);
         stage.setTitle("Fishing Supremacy");
         scene.setFill(Color.rgb(86,191,239));
@@ -88,7 +88,7 @@ public class App extends Application {
         buttonBox = new VBox(20);
         buttonBox.setAlignment(Pos.CENTER);
 
-        Button ButtonStart = createButton("Start.png");
+        Button ButtonStart = createButton("start.png");
         Button ButtonExit = createButton("Exit.png");
 
         setupButtonInteraction(ButtonStart);
@@ -99,7 +99,7 @@ public class App extends Application {
         this.eventHandler = new EventHandler(this, player);
 
         labelStartClick = new Label("Press SPACE to Fish !");
-        labelStartClick.setStyle("-fx-font-size: 50; -fx-text-fill: Black; -fx-font-weight: bold;");
+        labelStartClick.setStyle("-fx-font-size: 30; -fx-text-fill: Green; -fx-font-weight: bold;");
         labelStartClick.setVisible(false);
 
         moneyCount = new Label("Pesos: " + banque);
@@ -109,10 +109,12 @@ public class App extends Application {
         ImageView moneySymbolView = new ImageView(moneySymbol);
         moneySymbolView.setVisible(false);
 
+        StackPane.setAlignment(labelStartClick, Pos.TOP_CENTER);
+        StackPane.setMargin(labelStartClick, new Insets(110, 0, 10, 10));
         StackPane.setAlignment(moneyCount, Pos.TOP_RIGHT);
-        StackPane.setMargin(moneyCount, new Insets(20, 300, 10, 10));
+        StackPane.setMargin(moneyCount, new Insets(50, 100, 10, 10));
         StackPane.setAlignment(moneySymbolView, Pos.TOP_RIGHT);
-        StackPane.setMargin(moneySymbolView, new Insets(10, 240, 10, 10));
+        StackPane.setMargin(moneySymbolView, new Insets(40, 40, 10, 10));
 
 
         /*Implementation Meduses*/
@@ -131,6 +133,7 @@ public class App extends Application {
             moneyCount.toFront();
             moneyCount.setVisible(true);
             moneySymbolView.setVisible(true);
+            player.sprite.setVisible(true);
 
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.seconds(0.5), new KeyValue(labelStartClick.visibleProperty(), false)),
@@ -169,7 +172,9 @@ public class App extends Application {
                 MenuPrincipal.setVisible(true);
                 buttonBox.setVisible(true);
                 labelStartClick.toBack();
-                moneyCount.toBack();
+                moneyCount.setVisible(false);
+                player.sprite.setVisible(false);
+                moneySymbolView.setVisible(false);
                 break;
             case Q:
                 player.setPositionX(player.getPositionX() - player.getSpeed());
