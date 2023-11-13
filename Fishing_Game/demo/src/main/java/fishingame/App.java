@@ -215,7 +215,7 @@ public class App extends Application {
                 update();
 
 
-                player.setPositionY(player.getPositionY() + 1);
+                player.setPositionY(player.getPositionY() + 2);
                 FollowCharacter();
             }
         };

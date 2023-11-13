@@ -11,8 +11,6 @@ public class Player {
     protected int positionX;
     protected int positionY;
     protected int speed;
-    protected int width;
-    protected int height;
 
     public int getPositionX(){
         return positionX;
@@ -22,12 +20,6 @@ public class Player {
     }
     public int getSpeed() {
         return speed;
-    }
-    public int getWidth() {
-        return width;
-    }
-    public int getHeight(){
-        return height;
     }
 
     public void setPositionX(int positionX){
@@ -46,8 +38,6 @@ public class Player {
         sprite.setTranslateX(16);
         sprite.setTranslateY(180);
         this.speed = speed;
-        this.width = 50;
-        this.height = 150;
     }
 
     

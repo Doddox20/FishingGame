@@ -17,8 +17,6 @@ public abstract class Fish {
     protected int value;
     protected AnimationTimer timer;
     protected int Reward;
-    protected int width;
-    protected int height;
 
     public int getPositionX(){
         return positionX;
@@ -76,13 +74,6 @@ public abstract class Fish {
 
     public abstract void swimming();
 
-    public int getWidth(){
-        return width;
-    }
-
-    public  int getHeight(){
-        return height;
-    }
 
     
 

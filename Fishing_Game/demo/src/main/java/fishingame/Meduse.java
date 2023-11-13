@@ -5,8 +5,6 @@ public class Meduse extends Fish{
     public Meduse(int positionX, int positionY){
         super("meduse.png", positionX, positionY, 5, 1);
         this.Reward = 1;
-        this.height = 300;
-        this.width = 80;
     }
 
     @Override
