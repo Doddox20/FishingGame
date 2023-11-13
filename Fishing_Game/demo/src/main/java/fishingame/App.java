@@ -136,6 +136,21 @@ public class App extends Application {
         Meduse meduse3 = new Meduse(0, 600);
         stackPane.getChildren().add(meduse3.sprite);
         fishList.add(meduse3);
+        
+        Thon Thon1 = new Thon(-250, 1000);
+        stackPane.getChildren().add(Thon1.sprite);
+        fishList.add(Thon1);
+
+        Thon Thon2 = new Thon(250, 1200);
+        stackPane.getChildren().add(Thon2.sprite);
+        fishList.add(Thon2);
+
+        Murene Murene1 = new Murene(400, 1400);
+        stackPane.getChildren().add(Murene1.sprite);
+        fishList.add(Murene1);
+        Murene Murene2 = new Murene(200, 1600);
+        stackPane.getChildren().add(Murene2.sprite);
+        fishList.add(Murene2);
 
         timer = new AnimationTimer() {
             @Override
@@ -256,9 +271,8 @@ public class App extends Application {
     
         stackPane.getChildren().remove(fish);
     
-        if (fish instanceof Meduse) {
             restartGame();
-        }
+        
     }
 
     public void restartGame() {

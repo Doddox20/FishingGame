@@ -1,12 +1,20 @@
-// package fishingame;
+package fishingame;
 
-// public class Murene extends Fish{
+public class Murene extends Fish{
 
-//     public Murene(){
-//         super("", 0, 0, 100, 5);
-//     }
+    public Murene(int positionX, int positionY) {
+        super("murene.png", positionX, positionY, 0, -5);
+        this.Reward = -5;
+    }
 
-//     @Override
-//     public void update(EventHandler eventHandler){   
-//     }
-// }
+    @Override
+    public void swimming() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'swimming'");
+    }
+
+    @Override
+    public void update(EventHandler eventHandler){   
+    }
+
+}
