@@ -1,6 +1,7 @@
 package fishingame;
 
 import javafx.animation.AnimationTimer;
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -15,6 +16,9 @@ public abstract class Fish {
     protected int speed;
     protected int value;
     protected AnimationTimer timer;
+    protected int Reward;
+    protected int width;
+    protected int height;
 
     public int getPositionX(){
         return positionX;
@@ -24,6 +28,10 @@ public abstract class Fish {
     }
     public int getSpeed(){
         return speed;
+    }
+
+    public int getReward() {
+        return Reward;
     }
     public void setPositionX(int positionX){
         sprite.setTranslateX(positionX);
@@ -41,6 +49,7 @@ public abstract class Fish {
         sprite.setTranslateY(positionY);
         this.speed = speed;
         this.value = value;
+        sprite.setUserData(this);
         timer = new AnimationTimer() {
             public void handle(long now){
                 swimming();
@@ -60,8 +69,25 @@ public abstract class Fish {
                 break;
         }
     }
+    public Bounds getBounds() {
+        return sprite.getBoundsInParent();
+    }
+    
 
     public abstract void swimming();
 
-    public abstract void update(EventHandler eventHandler);
+    public int getWidth(){
+        return width;
+    }
+
+    public  int getHeight(){
+        return height;
+    }
+
+    
+
+    public void update(EventHandler eventHandler) {
+        swimming();
+    }
+    
 }

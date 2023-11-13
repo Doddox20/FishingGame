@@ -6,6 +6,8 @@ import javafx.animation.KeyValue;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.collections.transformation.FilteredList;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,6 +32,8 @@ import javafx.scene.text.TextFlow;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * JavaFX App
@@ -47,6 +51,11 @@ public class App extends Application {
     private StackPane stackPane;
     private double totalBackgroundHeight;
     private int banque = 0;
+    private List<Fish> fishList = new ArrayList<>();
+    private AnimationTimer timer;
+    private boolean timerIsRunning;
+    private boolean firstSpaceKeyPress = true;
+    
 
     private void setupButtonInteraction(Button button) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), button);
@@ -120,10 +129,21 @@ public class App extends Application {
         /*Implementation Meduses*/
         Meduse meduse1 = new Meduse(-250, 450);
         stackPane.getChildren().add(meduse1.sprite);
+        fishList.add(meduse1);
         Meduse meduse2 = new Meduse(250, 450);
         stackPane.getChildren().add(meduse2.sprite);
+        fishList.add(meduse2);
         Meduse meduse3 = new Meduse(0, 600);
         stackPane.getChildren().add(meduse3.sprite);
+        fishList.add(meduse3);
+
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                update();
+            }
+        };
+
 
         ButtonStart.setOnAction(event -> {
             MenuPrincipal.setVisible(false);
@@ -166,6 +186,8 @@ public class App extends Application {
         return button;
     }
 
+    
+
     public void handleKeyPressed(KeyCode keycode){
         switch(keycode) {
             case ESCAPE:
@@ -183,16 +205,24 @@ public class App extends Application {
                 player.setPositionX(player.getPositionX() + player.getSpeed());
                 break;
             case SPACE:
-                AnimationTimer timer = new AnimationTimer() {
-                    public void handle(long now) {
-                        labelStartClick.setVisible(false);
-                        player.setPositionY(player.getPositionY() + 1);
-                        FollowCharacter();
-                    }
-                };
-                timer.start();
-                break;
-        }
+
+    if (firstSpaceKeyPress) {
+        labelStartClick.setVisible(false);
+        firstSpaceKeyPress = false;
+
+        timer = new AnimationTimer() {
+            public void handle(long now) {
+                update();
+
+
+                player.setPositionY(player.getPositionY() + 1);
+                FollowCharacter();
+            }
+        };
+        timer.start();
+    }
+    break;
+    }
     }
 
     public static void main(String[] args) {
@@ -201,7 +231,13 @@ public class App extends Application {
 
     public void update() {
         player.update(eventHandler);
+        for (Fish fish : fishList) {
+            fish.update(eventHandler);
+            if (player.getBounds().intersects(fish.getBounds())) {
+                handleFishCollision(fish);
+            }}
     }
+    
 
     public void FollowCharacter() {
         double playerPosY = player.getPositionY();
@@ -213,4 +249,27 @@ public class App extends Application {
         Rectangle2D viewport = new Rectangle2D(0, offsetFactor, 1024, 720);
         ((ImageView) stackPane.getChildren().get(0)).setViewport(viewport);
     }
+
+    private void handleFishCollision(Fish fish) {
+        banque += fish.getReward();
+        moneyCount.setText("Pesos: " + banque);
+    
+        stackPane.getChildren().remove(fish);
+    
+        if (fish instanceof Meduse) {
+            restartGame();
+        }
+    }
+
+    public void restartGame() {
+
+        player.setPositionX(16); 
+        player.setPositionY(0);
+        stackPane.setTranslateY(0);
+        timer.stop();
+        firstSpaceKeyPress = true;
+    }
+    
+
+    
 }
