@@ -3,8 +3,7 @@ package fishingame;
 public class Murene extends Fish{
 
     public Murene(int positionX, int positionY) {
-        super("murene.png", positionX, positionY, 0, -5);
-        this.Reward = -5;
+        super("murene.png", positionX, positionY, -5);
     }
 
     @Override

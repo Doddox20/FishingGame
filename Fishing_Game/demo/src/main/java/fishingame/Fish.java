@@ -1,6 +1,5 @@
 package fishingame;
 
-import javafx.animation.AnimationTimer;
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,8 +14,8 @@ public abstract class Fish {
     protected int positionY;
     protected int speed;
     protected int value;
-    protected AnimationTimer timer;
-    protected int Reward;
+    protected int posDepart;
+    protected double i = 0;
 
     public int getPositionX(){
         return positionX;
@@ -27,9 +26,8 @@ public abstract class Fish {
     public int getSpeed(){
         return speed;
     }
-
-    public int getReward() {
-        return Reward;
+    public int getValue() {
+        return value;
     }
     public void setPositionX(int positionX){
         sprite.setTranslateX(positionX);
@@ -40,45 +38,23 @@ public abstract class Fish {
         this.positionY = positionY;
     }
 
-    public Fish(String filepath, int positionX, int positionY, int speed, int value) {
+    public Fish(String filepath, int positionX, int positionY, int value) {
         spriteSheet = new Image(filepath);
         sprite = new ImageView(spriteSheet);
         sprite.setTranslateX(positionX);
         sprite.setTranslateY(positionY);
-        this.speed = speed;
+        this.posDepart = positionX;
         this.value = value;
         sprite.setUserData(this);
-        timer = new AnimationTimer() {
-            public void handle(long now){
-                swimming();
-            }
-        };
     }
 
-    public void handleKeyPressed(KeyCode keycode){
-        switch(keycode) {
-            case SPACE:
-                System.out.println("Timer is running!");
-                timer.start();
-                break;
-            case ESCAPE:
-                System.out.println("Timer stopped!");
-                timer.stop();
-                break;
-        }
-    }
     public Bounds getBounds() {
         return sprite.getBoundsInParent();
     }
     
-
     public abstract void swimming();
-
-
-    
 
     public void update(EventHandler eventHandler) {
         swimming();
     }
-    
 }

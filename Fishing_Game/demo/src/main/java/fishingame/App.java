@@ -29,8 +29,10 @@ import javafx.util.Duration;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
-
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,7 @@ import java.util.List;
 public class App extends Application {
 
     private static Scene scene;
+    private MediaPlayer mediaPlayer;
     private Rectangle MenuPrincipal;
     private VBox buttonBox;
     private Label labelStartClick;
@@ -55,7 +58,6 @@ public class App extends Application {
     private AnimationTimer timer;
     private boolean timerIsRunning;
     private boolean firstSpaceKeyPress = true;
-    
 
     private void setupButtonInteraction(Button button) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), button);
@@ -125,30 +127,44 @@ public class App extends Application {
         StackPane.setAlignment(moneySymbolView, Pos.TOP_RIGHT);
         StackPane.setMargin(moneySymbolView, new Insets(40, 40, 10, 10));
 
+        String musicFile = "redneck.mp3";
+        Media sound = new Media(new File(musicFile).toURI().toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
 
         /*Implementation Meduses*/
-        Meduse meduse1 = new Meduse(-250, 450);
+        Meduse meduse1 = new Meduse(-300, 450);
         stackPane.getChildren().add(meduse1.sprite);
         fishList.add(meduse1);
-        Meduse meduse2 = new Meduse(250, 450);
+        Meduse meduse2 = new Meduse(300, 450);
         stackPane.getChildren().add(meduse2.sprite);
         fishList.add(meduse2);
         Meduse meduse3 = new Meduse(0, 600);
         stackPane.getChildren().add(meduse3.sprite);
         fishList.add(meduse3);
+        Meduse meduse4 = new Meduse(-300, 750);
+        stackPane.getChildren().add(meduse4.sprite);
+        fishList.add(meduse4);
+        Meduse meduse5 = new Meduse(300, 750);
+        stackPane.getChildren().add(meduse5.sprite);
+        fishList.add(meduse5);
         
-        Thon Thon1 = new Thon(-250, 1000);
-        stackPane.getChildren().add(Thon1.sprite);
-        fishList.add(Thon1);
+        /*Implementation Sardine*/
+        Sardine sardine1 = new Sardine(-250, 1000);
+        stackPane.getChildren().add(sardine1.sprite);
+        fishList.add(sardine1);
+        Sardine sardine2 = new Sardine(250, 1400);
+        stackPane.getChildren().add(sardine2.sprite);
+        fishList.add(sardine2);
+        Sardine sardine3 = new Sardine(-250, 1700);
+        stackPane.getChildren().add(sardine3.sprite);
+        fishList.add(sardine3);
 
-        Thon Thon2 = new Thon(250, 1200);
-        stackPane.getChildren().add(Thon2.sprite);
-        fishList.add(Thon2);
-
-        Murene Murene1 = new Murene(400, 1400);
+        /*Implementation Meduse*/
+        Murene Murene1 = new Murene(400, 5000);
         stackPane.getChildren().add(Murene1.sprite);
         fishList.add(Murene1);
-        Murene Murene2 = new Murene(200, 1600);
+        Murene Murene2 = new Murene(200, 5000);
         stackPane.getChildren().add(Murene2.sprite);
         fishList.add(Murene2);
 
@@ -158,7 +174,6 @@ public class App extends Application {
                 update();
             }
         };
-
 
         ButtonStart.setOnAction(event -> {
             MenuPrincipal.setVisible(false);
@@ -228,8 +243,6 @@ public class App extends Application {
         timer = new AnimationTimer() {
             public void handle(long now) {
                 update();
-
-
                 player.setPositionY(player.getPositionY() + 2);
                 FollowCharacter();
             }
@@ -266,7 +279,7 @@ public class App extends Application {
     }
 
     private void handleFishCollision(Fish fish) {
-        banque += fish.getReward();
+        banque += fish.getValue();
         moneyCount.setText("Pesos: " + banque);
     
         stackPane.getChildren().remove(fish);
@@ -282,8 +295,5 @@ public class App extends Application {
         stackPane.setTranslateY(0);
         timer.stop();
         firstSpaceKeyPress = true;
-    }
-    
-
-    
+    }    
 }

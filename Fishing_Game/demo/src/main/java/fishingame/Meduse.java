@@ -3,21 +3,12 @@ package fishingame;
 public class Meduse extends Fish{
 
     public Meduse(int positionX, int positionY){
-        super("meduse.png", positionX, positionY, 5, 1);
-        this.Reward = 1;
+        super("meduse.png", positionX, positionY, 1);
     }
 
     @Override
     public void swimming(){
-        if (this.getPositionX() < 0) {
-            this.setPositionX(this.getPositionX() + getSpeed());
-        }
-        else {
-            this.setPositionX(this.getPositionX() - getSpeed());
-        }
+        this.i = this.i + 0.01;
+        setPositionX(posDepart + (int) (Math.sin(i) * 150));
     }
-    @Override
-    public void update(EventHandler eventHandler){   
-    }
-
 }
