@@ -139,21 +139,15 @@ public class App extends Application {
         mediaPlayer.play();
 
         /*Implementation Meduses*/
-        Meduse meduse1 = new Meduse(-300, 450);
-        stackPane.getChildren().add(meduse1.sprite);
-        fishList.add(meduse1);
-        Meduse meduse2 = new Meduse(300, 450);
-        stackPane.getChildren().add(meduse2.sprite);
-        fishList.add(meduse2);
-        Meduse meduse3 = new Meduse(0, 600);
-        stackPane.getChildren().add(meduse3.sprite);
-        fishList.add(meduse3);
-        Meduse meduse4 = new Meduse(-300, 750);
-        stackPane.getChildren().add(meduse4.sprite);
-        fishList.add(meduse4);
-        Meduse meduse5 = new Meduse(300, 750);
-        stackPane.getChildren().add(meduse5.sprite);
-        fishList.add(meduse5);
+
+        for (int i = 0; i < 20; i++) {
+            int randomX = (int) (Math.random() * 800 - 400);
+            int randomY = (int) (Math.random() * 4500 + 450); 
+    
+            Meduse meduse = new Meduse(randomX, randomY);
+            stackPane.getChildren().add(meduse.sprite);
+            fishList.add(meduse);
+        }
 
         /*Implementation Sardine*/
         Sardine sardine1 = new Sardine(-250, 1000);
@@ -325,5 +319,10 @@ public class App extends Application {
         stackPane.setTranslateY(0);
         timer.stop();
         firstSpaceKeyPress = true;
+
+
+    
+        
+        
     }
 }
