@@ -25,8 +25,6 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.util.Duration;
 
-
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,15 +43,28 @@ public class App extends Application {
     private Label moneyCount;
     private ImageView moneySymbolView;
     private Player player;
-    
+
     private EventHandler eventHandler;
     private StackPane stackPane;
     private double totalBackgroundHeight;
     private int banque = 0;
     private List<Fish> fishList = new ArrayList<>();
     private AnimationTimer timer;
-    private boolean timerIsRunning;
     private boolean firstSpaceKeyPress = true;
+    private boolean isMovingRight = false;
+    private boolean isMovingLeft = false;
+
+    private AnimationTimer moveTimer = new AnimationTimer() {
+        @Override
+        public void handle(long now) {
+            if (isMovingRight && player.getPositionX() < 495) {
+                player.setPositionX(player.getPositionX() + player.getSpeed());
+            }
+            if (isMovingLeft && player.getPositionX() > -495) {
+                player.setPositionX(player.getPositionX() - player.getSpeed());
+            }
+        }
+    };
 
     private void setupButtonInteraction(Button button) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), button);
@@ -89,8 +100,7 @@ public class App extends Application {
         ImagePattern pattern = new ImagePattern(new Image("tableau.png"));
         MenuPrincipal.setFill(pattern);
         stage.setTitle("Fishing Supremacy");
-        scene.setFill(Color.rgb(86,191,239));
-
+        scene.setFill(Color.rgb(86, 191, 239));
 
         buttonBox = new VBox(20);
         buttonBox.setAlignment(Pos.CENTER);
@@ -144,7 +154,7 @@ public class App extends Application {
         Meduse meduse5 = new Meduse(300, 750);
         stackPane.getChildren().add(meduse5.sprite);
         fishList.add(meduse5);
-        
+
         /*Implementation Sardine*/
         Sardine sardine1 = new Sardine(-250, 1000);
         stackPane.getChildren().add(sardine1.sprite);
@@ -216,10 +226,8 @@ public class App extends Application {
         return button;
     }
 
-    
-
-    public void handleKeyPressed(KeyCode keycode){
-        switch(keycode) {
+    public void handleKeyPressed(KeyCode keycode) {
+        switch (keycode) {
             case ESCAPE:
                 MenuPrincipal.setVisible(true);
                 buttonBox.setVisible(true);
@@ -229,66 +237,53 @@ public class App extends Application {
                 moneySymbolView.setVisible(false);
                 break;
             case Q:
-            movePlayerLeft();
+                movePlayerLeft();
                 break;
             case D:
-            movePlayerRight();
+                movePlayerRight();
                 break;
             case SPACE:
+                if (firstSpaceKeyPress) {
+                    labelStartClick.setVisible(false);
+                    firstSpaceKeyPress = false;
 
-    if (firstSpaceKeyPress) {
-        labelStartClick.setVisible(false);
-        firstSpaceKeyPress = false;
+                    timer = new AnimationTimer() {
+                        public void handle(long now) {
+                            update();
+                            player.setPositionY(player.getPositionY() + 3);
+                            FollowCharacter();
+                        }
+                    };
+                    timer.start();
+                }
+                break;
+        }
+    }
 
-        timer = new AnimationTimer() {
-            public void handle(long now) {
-                update();
-                player.setPositionY(player.getPositionY() + 3);
-                FollowCharacter();
-            }
-        };
-        timer.start();
-    }
-    break;
-    }
+    public void handleKeyReleased(KeyCode keycode) {
+        switch (keycode) {
+            case D:
+                isMovingRight = false;
+                break;
+            case Q:
+                isMovingLeft = false;
+                break;
+        }
+        // Arrêtez le mouvement uniquement si les deux touches sont relâchées
+        if (!isMovingRight && !isMovingLeft) {
+            moveTimer.stop();
+        }
     }
 
     private void movePlayerRight() {
-        AnimationTimer moveRightTimer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if (player.getPositionX() < 495) {
-                    player.setPositionX(player.getPositionX() + player.getSpeed());
-                }
-            }
-        };
-        moveRightTimer.start();
-        
-        scene.setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.D) {
-                moveRightTimer.stop();
-            }
-        });
+        isMovingRight = true;
+        moveTimer.start();
     }
+
     private void movePlayerLeft() {
-        AnimationTimer moveRightTimer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if (player.getPositionX() > -495) {
-                    player.setPositionX(player.getPositionX() - player.getSpeed());
-                }
-            }
-        };
-        moveRightTimer.start();
-        
-        scene.setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.D) {
-                moveRightTimer.stop();
-            }
-        });
+        isMovingLeft = true;
+        moveTimer.start();
     }
-
-
 
     public static void main(String[] args) {
         launch();
@@ -300,17 +295,17 @@ public class App extends Application {
             fish.update(eventHandler);
             if (player.getBounds().intersects(fish.getBounds())) {
                 handleFishCollision(fish);
-            }}
+            }
+        }
     }
-    
 
     public void FollowCharacter() {
         double playerPosY = player.getPositionY();
-        double offsetFactor = playerPosY ;
+        double offsetFactor = playerPosY;
 
         offsetFactor = Math.min(totalBackgroundHeight - 720, Math.max(0, offsetFactor));
         stackPane.setTranslateY(-offsetFactor);
-        
+
         Rectangle2D viewport = new Rectangle2D(0, offsetFactor, 1024, 720);
         ((ImageView) stackPane.getChildren().get(0)).setViewport(viewport);
     }
@@ -318,19 +313,17 @@ public class App extends Application {
     private void handleFishCollision(Fish fish) {
         banque += fish.getValue();
         moneyCount.setText("Pesos: " + banque);
-    
+
         stackPane.getChildren().remove(fish);
-    
-            restartGame();
-        
+
+        restartGame();
     }
 
     public void restartGame() {
-
-        player.setPositionX(16); 
+        player.setPositionX(16);
         player.setPositionY(0);
         stackPane.setTranslateY(0);
         timer.stop();
         firstSpaceKeyPress = true;
-    }    
+    }
 }
