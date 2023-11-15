@@ -41,7 +41,6 @@ public class App extends Application {
     private Label moneyCount;
     private ImageView moneySymbolView;
     private Player player;
-    private ImageView shopButtonView;
     private EventHandler eventHandler;
     private StackPane stackPane;
     private double totalBackgroundHeight;
@@ -51,6 +50,7 @@ public class App extends Application {
     private boolean firstSpaceKeyPress = true;
     private boolean isMovingRight = false;
     private boolean isMovingLeft = false;
+    private Button ButtonShop;
 
     private AnimationTimer moveTimer = new AnimationTimer() {
         @Override
@@ -109,8 +109,12 @@ public class App extends Application {
         buttonBox.setAlignment(Pos.CENTER);
         Button ButtonStart = createButton("start.png");
         Button ButtonExit = createButton("Exit.png");
+        ButtonShop = createButton("Shop.png");
         setupButtonInteraction(ButtonStart);
         setupButtonInteraction(ButtonExit);
+        setupButtonInteraction(ButtonShop);
+
+        ButtonShop.setVisible(false);
 
         /*Setting player*/
         this.player = new Player(5);
@@ -132,9 +136,6 @@ public class App extends Application {
         ImageView moneySymbolView = new ImageView(moneySymbol);
         moneySymbolView.setVisible(false);
 
-        Image shopButton = new Image("Shop.png");
-        ImageView shopButtonView = new ImageView(shopButton);
-        shopButtonView.setVisible(false);
 
         StackPane.setAlignment(labelStartClick, Pos.TOP_CENTER);
         StackPane.setMargin(labelStartClick, new Insets(110, 0, 10, 10));
@@ -142,8 +143,8 @@ public class App extends Application {
         StackPane.setMargin(moneyCount, new Insets(50, 100, 10, 10));
         StackPane.setAlignment(moneySymbolView, Pos.TOP_RIGHT);
         StackPane.setMargin(moneySymbolView, new Insets(40, 40, 10, 10));
-         StackPane.setAlignment(shopButtonView, Pos.BOTTOM_CENTER);
-        StackPane.setMargin(shopButtonView, new Insets(40, 40, 10, 10));
+        StackPane.setAlignment(ButtonShop, Pos.TOP_CENTER);
+        StackPane.setMargin(ButtonShop, new Insets(110, 0, 10, 10));
 
         /*Main menu song */
         String musicFile = "Fishing_Game/demo/src/main/resources/redneck.mp3";
@@ -151,7 +152,7 @@ public class App extends Application {
         mediaPlayer = new MediaPlayer(sound);
 
         /*Implementation Meduses*/
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 20; i++) {
             int randomX = (int) (Math.random() * 800 - 400);
             int randomY = (int) (Math.random() * 4500 + 450); 
             Meduse meduse = new Meduse(randomX, randomY);
@@ -160,7 +161,7 @@ public class App extends Application {
         }
 
         /*Implementation Sardine*/
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             int randomX = (int) (Math.random() * 800 - 400);
             int randomY = (int) (Math.random() * 2500 + 450);
             Sardine sardine = new Sardine(randomX, randomY);
@@ -172,9 +173,9 @@ public class App extends Application {
         for (int i = 0; i < 3; i++) {
             int randomX = (int) (Math.random() * 800 - 400);
             int randomY = (int) (Math.random() * 3500 + 1000);
-            Sardine sardine = new Sardine(randomX, randomY);
-            stackPane.getChildren().add(sardine.sprite);
-            fishList.add(sardine);
+            Thon thon = new Thon(randomX, randomY);
+            stackPane.getChildren().add(thon.sprite);
+            fishList.add(thon);
         }
 
         Sol SolFinal = new Sol(0, 5200);
@@ -207,12 +208,18 @@ public class App extends Application {
             timeline.play();
         });
 
+        
+
         ButtonExit.setOnAction(event -> {
             stage.hide();
         });
 
+        // shopButton.setOnAction(event -> {
+
+        // });
+
         buttonBox.getChildren().addAll(ButtonStart, ButtonExit);
-        stackPane.getChildren().addAll(MenuPrincipal, buttonBox, labelStartClick, moneyCount, moneySymbolView);
+        stackPane.getChildren().addAll(MenuPrincipal, buttonBox, labelStartClick, moneyCount, moneySymbolView, ButtonShop);
 
         stage.setScene(scene);
         stage.show();
@@ -240,7 +247,7 @@ public class App extends Application {
                 moneyCount.setVisible(false);
                 player.sprite.setVisible(false);
                 moneySymbolView.setVisible(false);
-                shopButtonView.setVisible(false);
+                ButtonShop.setVisible(false);
                 break;
             case Q:
                 movePlayerLeft();
@@ -326,6 +333,7 @@ public class App extends Application {
     }
 
     public void restartGame() {
+        
         player.setPositionX(16);
         player.setPositionY(0);
         
