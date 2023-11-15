@@ -43,7 +43,7 @@ public class App extends Application {
     private Label moneyCount;
     private ImageView moneySymbolView;
     private Player player;
-
+    private ImageView shopButtonView;
     private EventHandler eventHandler;
     private StackPane stackPane;
     private double totalBackgroundHeight;
@@ -126,12 +126,18 @@ public class App extends Application {
         ImageView moneySymbolView = new ImageView(moneySymbol);
         moneySymbolView.setVisible(false);
 
+        Image shopButton = new Image("Shop.png");
+        ImageView shopButtonView = new ImageView(shopButton);
+        shopButtonView.setVisible(false);
+
         StackPane.setAlignment(labelStartClick, Pos.TOP_CENTER);
         StackPane.setMargin(labelStartClick, new Insets(110, 0, 10, 10));
         StackPane.setAlignment(moneyCount, Pos.TOP_RIGHT);
         StackPane.setMargin(moneyCount, new Insets(50, 100, 10, 10));
         StackPane.setAlignment(moneySymbolView, Pos.TOP_RIGHT);
         StackPane.setMargin(moneySymbolView, new Insets(40, 40, 10, 10));
+         StackPane.setAlignment(shopButtonView, Pos.BOTTOM_CENTER);
+        StackPane.setMargin(shopButtonView, new Insets(40, 40, 10, 10));
 
         String musicFile = "Fishing_Game/demo/src/main/resources/redneck.mp3";
         Media sound = new Media(new File(musicFile).toURI().toString());
@@ -229,6 +235,7 @@ public class App extends Application {
                 moneyCount.setVisible(false);
                 player.sprite.setVisible(false);
                 moneySymbolView.setVisible(false);
+                shopButtonView.setVisible(false);
                 break;
             case Q:
                 movePlayerLeft();
@@ -316,6 +323,7 @@ public class App extends Application {
     public void restartGame() {
         player.setPositionX(16);
         player.setPositionY(0);
+        
         stackPane.setTranslateY(0);
         timer.stop();
         firstSpaceKeyPress = true;
