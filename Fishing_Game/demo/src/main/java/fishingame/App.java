@@ -160,13 +160,13 @@ public class App extends Application {
         stackPane.getChildren().add(sardine3.sprite);
         fishList.add(sardine3);
 
-        /*Implementation Meduse*/
-        Murene Murene1 = new Murene(400, 2000);
-        stackPane.getChildren().add(Murene1.sprite);
-        fishList.add(Murene1);
-        Murene Murene2 = new Murene(200, 2300);
-        stackPane.getChildren().add(Murene2.sprite);
-        fishList.add(Murene2);
+        /*Implementation Thon*/
+        Thon thon1 = new Thon(400, 2000);
+        stackPane.getChildren().add(thon1.sprite);
+        fishList.add(thon1);
+        Thon thon2 = new Thon(200, 2300);
+        stackPane.getChildren().add(thon2.sprite);
+        fishList.add(thon2);
 
         Sol SolFinal = new Sol(0, 5200);
         stackPane.getChildren().add(SolFinal.sprite);
@@ -244,7 +244,7 @@ public class App extends Application {
                     timer = new AnimationTimer() {
                         public void handle(long now) {
                             update();
-                            player.setPositionY(player.getPositionY() + 3);
+                            player.setPositionY(player.getPositionY() + 2);
                             FollowCharacter();
                         }
                     };
