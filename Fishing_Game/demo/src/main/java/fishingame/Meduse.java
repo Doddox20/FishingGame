@@ -8,7 +8,7 @@ public class Meduse extends Fish{
 
     @Override
     public void swimming(){
-        this.i = this.i + 0.01;
+        this.i = this.i + 0.02;
         setPositionX(posDepart + (int) (Math.sin(i) * 150));
     }
 }

@@ -138,20 +138,20 @@ public class App extends Application {
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
 
-        /*Implementation Meduses*/
-        Meduse meduse1 = new Meduse(-300, 450);
+        /*Implementation Meduse*/
+        Meduse meduse1 = new Meduse(-350, 480);
         stackPane.getChildren().add(meduse1.sprite);
         fishList.add(meduse1);
-        Meduse meduse2 = new Meduse(300, 450);
+        Meduse meduse2 = new Meduse(330, 470);
         stackPane.getChildren().add(meduse2.sprite);
         fishList.add(meduse2);
-        Meduse meduse3 = new Meduse(0, 600);
+        Meduse meduse3 = new Meduse(30, 600);
         stackPane.getChildren().add(meduse3.sprite);
         fishList.add(meduse3);
-        Meduse meduse4 = new Meduse(-300, 750);
+        Meduse meduse4 = new Meduse(-200, 800);
         stackPane.getChildren().add(meduse4.sprite);
         fishList.add(meduse4);
-        Meduse meduse5 = new Meduse(300, 750);
+        Meduse meduse5 = new Meduse(350, 780);
         stackPane.getChildren().add(meduse5.sprite);
         fishList.add(meduse5);
 
@@ -166,13 +166,13 @@ public class App extends Application {
         stackPane.getChildren().add(sardine3.sprite);
         fishList.add(sardine3);
 
-        /*Implementation Meduse*/
-        Murene Murene1 = new Murene(400, 2000);
-        stackPane.getChildren().add(Murene1.sprite);
-        fishList.add(Murene1);
-        Murene Murene2 = new Murene(200, 2300);
-        stackPane.getChildren().add(Murene2.sprite);
-        fishList.add(Murene2);
+        /*Implementation Thon*/
+        Thon thon1 = new Thon(400, 2000);
+        stackPane.getChildren().add(thon1.sprite);
+        fishList.add(thon1);
+        Thon thon2 = new Thon(200, 2300);
+        stackPane.getChildren().add(thon2.sprite);
+        fishList.add(thon2);
 
         Sol SolFinal = new Sol(0, 5200);
         stackPane.getChildren().add(SolFinal.sprite);
@@ -250,7 +250,7 @@ public class App extends Application {
                     timer = new AnimationTimer() {
                         public void handle(long now) {
                             update();
-                            player.setPositionY(player.getPositionY() + 3);
+                            player.setPositionY(player.getPositionY() + 2);
                             FollowCharacter();
                         }
                     };

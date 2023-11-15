@@ -9,10 +9,6 @@ public class Sardine extends Fish{
     @Override
     public void swimming(){
         this.i = this.i + 0.025;
-        setPositionX(posDepart + (int) (Math.sin(i) * 500));
-    }
-    @Override
-    public void update(EventHandler eventHandler){
-        swimming();
+        setPositionX(posDepart + (int) (Math.sin(i) * 400));
     }
 }
