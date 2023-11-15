@@ -18,12 +18,12 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.util.Duration;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 
 
@@ -45,6 +45,7 @@ public class App extends Application {
     private Label moneyCount;
     private ImageView moneySymbolView;
     private Player player;
+    
     private EventHandler eventHandler;
     private StackPane stackPane;
     private double totalBackgroundHeight;
