@@ -22,6 +22,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -49,6 +51,7 @@ public class App extends Application {
     private Label moneyCount;
     private ImageView moneySymbolView;
     private Player player;
+    private MediaPlayer mediaPlayer;
     private EventHandler eventHandler;
     private StackPane stackPane;
     private double totalBackgroundHeight;
@@ -126,10 +129,10 @@ public class App extends Application {
         StackPane.setAlignment(moneySymbolView, Pos.TOP_RIGHT);
         StackPane.setMargin(moneySymbolView, new Insets(40, 40, 10, 10));
 
-        // String musicFile = "redneck.mp3";
-        // Media sound = new Media(new File(musicFile).toURI().toString());
-        // mediaPlayer = new MediaPlayer(sound);
-        // mediaPlayer.play();
+        String musicFile = "Fishing_Game/demo/src/main/resources/redneck.mp3";
+        Media sound = new Media(new File(musicFile).toURI().toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
 
         /*Implementation Meduses*/
         Meduse meduse1 = new Meduse(-300, 450);
