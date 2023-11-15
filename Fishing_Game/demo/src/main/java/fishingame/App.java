@@ -6,8 +6,6 @@ import javafx.animation.KeyValue;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.collections.transformation.FilteredList;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,18 +15,16 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.util.Duration;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 
 
 import java.io.File;
@@ -42,7 +38,7 @@ import java.util.List;
 public class App extends Application {
 
     private static Scene scene;
-    // private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
     private Rectangle MenuPrincipal;
     private VBox buttonBox;
     private Label labelStartClick;
@@ -126,10 +122,10 @@ public class App extends Application {
         StackPane.setAlignment(moneySymbolView, Pos.TOP_RIGHT);
         StackPane.setMargin(moneySymbolView, new Insets(40, 40, 10, 10));
 
-        // String musicFile = "redneck.mp3";
-        // Media sound = new Media(new File(musicFile).toURI().toString());
-        // mediaPlayer = new MediaPlayer(sound);
-        // mediaPlayer.play();
+        String musicFile = "Fishing_Game/demo/src/main/resources/redneck.mp3";
+        Media sound = new Media(new File(musicFile).toURI().toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
 
         /*Implementation Meduses*/
         Meduse meduse1 = new Meduse(-300, 450);
@@ -232,10 +228,10 @@ public class App extends Application {
                 moneySymbolView.setVisible(false);
                 break;
             case Q:
-                player.setPositionX(player.getPositionX() - player.getSpeed());
+            movePlayerLeft();
                 break;
             case D:
-                player.setPositionX(player.getPositionX() + player.getSpeed());
+            movePlayerRight();
                 break;
             case SPACE:
 
@@ -255,6 +251,43 @@ public class App extends Application {
     break;
     }
     }
+
+    private void movePlayerRight() {
+        AnimationTimer moveRightTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (player.getPositionX() < 495) {
+                    player.setPositionX(player.getPositionX() + player.getSpeed());
+                }
+            }
+        };
+        moveRightTimer.start();
+        
+        scene.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.D) {
+                moveRightTimer.stop();
+            }
+        });
+    }
+    private void movePlayerLeft() {
+        AnimationTimer moveRightTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (player.getPositionX() > -495) {
+                    player.setPositionX(player.getPositionX() - player.getSpeed());
+                }
+            }
+        };
+        moveRightTimer.start();
+        
+        scene.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.D) {
+                moveRightTimer.stop();
+            }
+        });
+    }
+
+
 
     public static void main(String[] args) {
         launch();

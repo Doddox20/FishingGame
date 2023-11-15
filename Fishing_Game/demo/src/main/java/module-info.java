@@ -1,6 +1,6 @@
 module fishingame {
     requires javafx.controls;
-    // requires javafx.media;
+    requires javafx.media;
     requires javafx.fxml;
     
 
