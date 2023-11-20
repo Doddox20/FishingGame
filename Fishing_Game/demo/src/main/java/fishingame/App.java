@@ -37,20 +37,20 @@ public class App extends Application {
     private MediaPlayer mediaPlayer;
     private Rectangle MenuPrincipal;
     private VBox buttonBox;
+    private VBox buttonBoxShop;
     private Label labelStartClick;
     private Label moneyCount;
-    private ImageView moneySymbolView;
     private Player player;
     private EventHandler eventHandler;
     private StackPane stackPane;
     private double totalBackgroundHeight;
-    private int banque = 0;
+    protected static int banque = 0;
     private List<Fish> fishList = new ArrayList<>();
     private AnimationTimer timer;
     private boolean firstSpaceKeyPress = true;
     private boolean isMovingRight = false;
     private boolean isMovingLeft = false;
-    private Button ButtonShop;
+    private boolean isGameRunning = false;
 
     private AnimationTimer moveTimer = new AnimationTimer() {
         @Override
@@ -109,12 +109,27 @@ public class App extends Application {
         buttonBox.setAlignment(Pos.CENTER);
         Button ButtonStart = createButton("start.png");
         Button ButtonExit = createButton("Exit.png");
-        ButtonShop = createButton("Shop.png");
+        Button ButtonShop = createButton("Shop.png");
+        
+
+
+        /*Setting shop menu*/
+        buttonBoxShop = new VBox(20);
+        buttonBoxShop.setAlignment(Pos.CENTER);
+
+        buttonBoxShop.setVisible(false);
+
+        Button ButtonExitShop = createButton("Exit.png");
+        Button speedUpgradeButton = new Button("Upgrade Speed (Cost: 50 sousous ");
+
+
+
         setupButtonInteraction(ButtonStart);
         setupButtonInteraction(ButtonExit);
         setupButtonInteraction(ButtonShop);
+        setupButtonInteraction(speedUpgradeButton);
+        setupButtonInteraction(ButtonExitShop);
 
-        ButtonShop.setVisible(false);
 
         /*Setting player*/
         this.player = new Player(5);
@@ -129,12 +144,15 @@ public class App extends Application {
         StackPane.setMargin(labelStartClick, new Insets(110, 0, 10, 10));
 
         /*Money display*/
-        moneyCount = new Label("Pesos: " + banque);
+        moneyCount = new Label("Pesos: " + App.banque);
         moneyCount.setStyle("-fx-font-size: 30; -fx-text-fill: White; -fx-font-weight: bold;");
         moneyCount.setVisible(false);
         Image moneySymbol = new Image("sousou.png");
         ImageView moneySymbolView = new ImageView(moneySymbol);
         moneySymbolView.setVisible(false);
+    
+
+        Shop shop = new Shop(player, moneyCount);
 
 
         StackPane.setAlignment(labelStartClick, Pos.TOP_CENTER);
@@ -199,6 +217,7 @@ public class App extends Application {
             moneySymbolView.setVisible(true);
             player.sprite.setVisible(true);
             mediaPlayer.play();
+            isGameRunning = true;
 
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.seconds(0.5), new KeyValue(labelStartClick.visibleProperty(), false)),
@@ -214,12 +233,31 @@ public class App extends Application {
             stage.hide();
         });
 
-        // shopButton.setOnAction(event -> {
+        ButtonExitShop.setOnAction(event -> {
+            buttonBox.setVisible(true);
+            buttonBoxShop.setVisible(false);
+        });
 
-        // });
+        ButtonShop.setOnAction(event -> {
+            moneyCount.setVisible(true);
+            moneySymbolView.setVisible(true);
+            buttonBox.setVisible(false);
+            buttonBoxShop.setVisible(true);
+            
+        });
 
-        buttonBox.getChildren().addAll(ButtonStart, ButtonExit);
-        stackPane.getChildren().addAll(MenuPrincipal, buttonBox, labelStartClick, moneyCount, moneySymbolView, ButtonShop);
+        speedUpgradeButton.setOnAction(event -> {
+            shop.upgradePlayerSpeed();
+        }
+        );
+
+    
+        
+        
+
+        buttonBox.getChildren().addAll(ButtonStart, ButtonExit, ButtonShop);
+        buttonBoxShop.getChildren().addAll(speedUpgradeButton, ButtonExitShop);
+        stackPane.getChildren().addAll(MenuPrincipal, buttonBox, buttonBoxShop, labelStartClick, moneyCount, moneySymbolView);
 
         stage.setScene(scene);
         stage.show();
@@ -240,14 +278,17 @@ public class App extends Application {
     public void handleKeyPressed(KeyCode keycode) {
         switch (keycode) {
             case ESCAPE:
+            
+
+            if (isGameRunning) {
+                break;
+            }
                 MenuPrincipal.setVisible(true);
                 buttonBox.setVisible(true);
                 labelStartClick.toBack();
                 mediaPlayer.stop();
-                moneyCount.setVisible(false);
                 player.sprite.setVisible(false);
-                moneySymbolView.setVisible(false);
-                ButtonShop.setVisible(false);
+
                 break;
             case Q:
                 movePlayerLeft();
@@ -334,12 +375,15 @@ public class App extends Application {
 
     public void restartGame() {
         
+        
         player.setPositionX(16);
         player.setPositionY(0);
+        isGameRunning = false;
         
         stackPane.setTranslateY(0);
         timer.stop();
         firstSpaceKeyPress = true;
+        
 
 
     

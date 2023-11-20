@@ -48,4 +48,7 @@ public class Player {
     public Bounds getBounds() {
         return sprite.getBoundsInParent();
     }
+    public void increaseSpeed() {
+        this.speed = speed +10;
+    }
 }
