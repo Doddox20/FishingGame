@@ -278,6 +278,8 @@ public class App extends Application {
     public void handleKeyPressed(KeyCode keycode) {
         switch (keycode) {
             case ESCAPE:
+
+
             
 
             if (isGameRunning) {
@@ -371,6 +373,7 @@ public class App extends Application {
         stackPane.getChildren().remove(fish);
 
         restartGame();
+        isGameRunning = false;
     }
 
     public void restartGame() {
@@ -378,7 +381,7 @@ public class App extends Application {
         
         player.setPositionX(16);
         player.setPositionY(0);
-        isGameRunning = false;
+        
         
         stackPane.setTranslateY(0);
         timer.stop();
