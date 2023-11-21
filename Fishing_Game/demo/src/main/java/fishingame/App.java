@@ -52,6 +52,7 @@ public class App extends Application {
     private boolean isMovingLeft = false;
     private boolean isMovingUp = false;
     private boolean isMovingDown = false;
+    private MediaPlayer collisionMediaPlayer;
 
     private boolean isGameRunning = false;
 
@@ -180,6 +181,10 @@ public class App extends Application {
         Media sound = new Media(new File(musicFile).toURI().toString());
         mediaPlayer = new MediaPlayer(sound);
 
+        String collisionSoundFile = "Fishing_Game/demo/src/main/resources/Poisson_attrape.mp3";
+        Media collisionSound = new Media(new File(collisionSoundFile).toURI().toString());
+        collisionMediaPlayer = new MediaPlayer(collisionSound);
+
         /*Implementation Meduses*/
         for (int i = 0; i < 20; i++) {
             int randomX = (int) (Math.random() * 800 - 400);
@@ -292,10 +297,6 @@ public class App extends Application {
     public void handleKeyPressed(KeyCode keycode) {
         switch (keycode) {
             case ESCAPE:
-
-
-            
-
             if (isGameRunning) {
                 break;
             }
@@ -409,18 +410,27 @@ public class App extends Application {
     }
 
     private void handleFishCollision(Fish fish) {
+        // Vérifiez si le lecteur multimédia pour le son de la collision est initialisé
+        if (collisionMediaPlayer != null) {
+            collisionMediaPlayer.stop(); // Arrête la lecture actuelle si elle est en cours
+        }
+
+        collisionMediaPlayer.play(); // Joue le son de la collision
+
+        // Reste du code pour la gestion de la collision
         banque += fish.getValue();
         moneyCount.setText("Sousous: " + banque);
-
         stackPane.getChildren().remove(fish);
-
         restartGame();
         isGameRunning = false;
     }
+    
+    
+    
+    
 
     public void restartGame() {
-        
-        
+
         player.setPositionX(16);
         player.setPositionY(0);
         
