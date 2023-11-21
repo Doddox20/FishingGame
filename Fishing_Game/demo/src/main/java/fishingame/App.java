@@ -206,7 +206,7 @@ public class App extends Application {
         /*Implementation Thon*/
         for (int i = 0; i < 3; i++) {
             int randomX = (int) (Math.random() * 800 - 400);
-            int randomY = (int) (Math.random() * 3500 + 1000);
+            int randomY = (int) (Math.random() * 3500 + 2450);
             Thon thon = new Thon(randomX, randomY);
             stackPane.getChildren().add(thon.sprite);
             fishList.add(thon);

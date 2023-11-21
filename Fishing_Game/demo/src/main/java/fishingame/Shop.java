@@ -6,6 +6,8 @@ public class Shop {
     private Player player;
     private Label moneyCount;
     protected int playerSpeedUpgradeCost = 75;
+    protected int playerHorizontalUpgradeCost = 200;
+
 
     public Shop(Player player, Label moneyCount) {
         this.player = player;
@@ -24,6 +26,15 @@ public class Shop {
     }
 
     public void upgradePlayerHorizontal() {
-        player.horizontal = true;
+        if (App.banque >= playerHorizontalUpgradeCost) {
+                App.banque -= playerHorizontalUpgradeCost;
+                moneyCount.setText("Sousous: " + App.banque);
+
+
+                player.horizontal = true;
+                playerSpeedUpgradeCost *= 2; 
+        }
+        
+        
     }
 }
