@@ -3,7 +3,7 @@ package fishingame;
 public class Sol extends Fish{
 
     public Sol(int positionX, int positionY){
-        super("Sol.png", positionX, positionY, 0);
+        super("Sol.png", positionX, positionY, 100);
     }
 
     @Override

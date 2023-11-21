@@ -212,6 +212,9 @@ public class App extends Application {
             fishList.add(thon);
         }
 
+        Coffre coffre = new Coffre();
+        stackPane.getChildren().add(coffre.sprite);
+
         Sol SolFinal = new Sol(0, 5200);
         stackPane.getChildren().add(SolFinal.sprite);
         fishList.add(SolFinal);
