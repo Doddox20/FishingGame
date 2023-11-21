@@ -183,7 +183,7 @@ public class App extends Application {
         /*Implementation Meduses*/
         for (int i = 0; i < 20; i++) {
             int randomX = (int) (Math.random() * 800 - 400);
-            int randomY = (int) (Math.random() * 4500 + 450); 
+            int randomY = (int) (Math.random() * 2950 + 450); 
             Meduse meduse = new Meduse(randomX, randomY);
             stackPane.getChildren().add(meduse.sprite);
             fishList.add(meduse);
@@ -192,7 +192,7 @@ public class App extends Application {
         /*Implementation Sardine*/
         for (int i = 0; i < 6; i++) {
             int randomX = (int) (Math.random() * 800 - 400);
-            int randomY = (int) (Math.random() * 2500 + 450);
+            int randomY = (int) (Math.random() * 3050 + 1050);
             Sardine sardine = new Sardine(randomX, randomY);
             stackPane.getChildren().add(sardine.sprite);
             fishList.add(sardine);
@@ -201,7 +201,7 @@ public class App extends Application {
         /*Implementation Thon*/
         for (int i = 0; i < 3; i++) {
             int randomX = (int) (Math.random() * 800 - 400);
-            int randomY = (int) (Math.random() * 3500 + 1000);
+            int randomY = (int) (Math.random() * 4050 + 2450);
             Thon thon = new Thon(randomX, randomY);
             stackPane.getChildren().add(thon.sprite);
             fishList.add(thon);
