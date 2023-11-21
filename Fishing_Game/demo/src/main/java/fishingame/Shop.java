@@ -15,11 +15,15 @@ public class Shop {
     public void upgradePlayerSpeed() {
         if (App.banque >= playerSpeedUpgradeCost) {
             App.banque -= playerSpeedUpgradeCost;
-            moneyCount.setText("Pesos: " + App.banque);
+            moneyCount.setText("Sousous: " + App.banque);
 
 
             player.increaseSpeed();
             playerSpeedUpgradeCost *= 2; 
         }
+    }
+
+    public void upgradePlayerHorizontal() {
+        player.horizontal = true;
     }
 }

@@ -11,6 +11,7 @@ public class Player {
     protected int positionX;
     protected int positionY;
     protected int speed;
+    protected boolean horizontal = false;
 
     public int getPositionX(){
         return positionX;

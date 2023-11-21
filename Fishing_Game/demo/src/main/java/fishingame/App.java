@@ -50,6 +50,9 @@ public class App extends Application {
     private boolean firstSpaceKeyPress = true;
     private boolean isMovingRight = false;
     private boolean isMovingLeft = false;
+    private boolean isMovingUp = false;
+    private boolean isMovingDown = false;
+
     private boolean isGameRunning = false;
 
     private AnimationTimer moveTimer = new AnimationTimer() {
@@ -60,6 +63,12 @@ public class App extends Application {
             }
             if (isMovingLeft && player.getPositionX() > -495) {
                 player.setPositionX(player.getPositionX() - player.getSpeed());
+            }
+            if (isMovingUp && player.getPositionY() > 0) {
+                player.setPositionY(player.getPositionY() - player.getSpeed());
+            }
+            if (isMovingDown && player.getPositionY() < 5200) {
+                player.setPositionY(player.getPositionY() + player.getSpeed());
             }
         }
     };
@@ -120,7 +129,8 @@ public class App extends Application {
         buttonBoxShop.setVisible(false);
 
         Button ButtonExitShop = createButton("Exit.png");
-        Button speedUpgradeButton = new Button("Upgrade Speed (Cost: 50 sousous ");
+        Button speedUpgradeButton = new Button("Upgrade Speed (Cost: 75 sousous)");
+        Button horizontalUpgradeButton = new Button("Horizontal upgrade (Cost: 200 sousous)");
 
 
 
@@ -128,6 +138,7 @@ public class App extends Application {
         setupButtonInteraction(ButtonExit);
         setupButtonInteraction(ButtonShop);
         setupButtonInteraction(speedUpgradeButton);
+        setupButtonInteraction(horizontalUpgradeButton);
         setupButtonInteraction(ButtonExitShop);
 
 
@@ -144,7 +155,7 @@ public class App extends Application {
         StackPane.setMargin(labelStartClick, new Insets(110, 0, 10, 10));
 
         /*Money display*/
-        moneyCount = new Label("Pesos: " + App.banque);
+        moneyCount = new Label("Sousous: " + App.banque);
         moneyCount.setStyle("-fx-font-size: 30; -fx-text-fill: White; -fx-font-weight: bold;");
         moneyCount.setVisible(false);
         Image moneySymbol = new Image("sousou.png");
@@ -250,13 +261,16 @@ public class App extends Application {
             shop.upgradePlayerSpeed();
         }
         );
+        horizontalUpgradeButton.setOnAction(event -> {
+            shop.upgradePlayerHorizontal();
+        });
 
     
         
         
 
         buttonBox.getChildren().addAll(ButtonStart, ButtonExit, ButtonShop);
-        buttonBoxShop.getChildren().addAll(speedUpgradeButton, ButtonExitShop);
+        buttonBoxShop.getChildren().addAll(speedUpgradeButton, ButtonExitShop, horizontalUpgradeButton);
         stackPane.getChildren().addAll(MenuPrincipal, buttonBox, buttonBoxShop, labelStartClick, moneyCount, moneySymbolView);
 
         stage.setScene(scene);
@@ -298,6 +312,12 @@ public class App extends Application {
             case D:
                 movePlayerRight();
                 break;
+            case Z:
+                movePlayerUp();
+                break;
+            case S:
+                movePlayerDown();
+                break;
             case SPACE:
                 if (firstSpaceKeyPress) {
                     labelStartClick.setVisible(false);
@@ -324,9 +344,18 @@ public class App extends Application {
             case Q:
                 isMovingLeft = false;
                 break;
+            case Z:
+                isMovingUp = false;
+                break;
+            case S:
+                isMovingDown = false;
+                break;
         }
         // Arrêtez le mouvement uniquement si les deux touches sont relâchées
         if (!isMovingRight && !isMovingLeft) {
+            moveTimer.stop();
+        }
+        if (!isMovingUp && !isMovingDown) {
             moveTimer.stop();
         }
     }
@@ -339,6 +368,19 @@ public class App extends Application {
     private void movePlayerLeft() {
         isMovingLeft = true;
         moveTimer.start();
+    }
+    private void movePlayerUp() {
+        if (player.horizontal){
+        isMovingUp = true;
+        moveTimer.start();
+        }
+    }
+    
+    private void movePlayerDown() {
+        if (player.horizontal){
+        isMovingDown = true;
+        moveTimer.start();
+        }
     }
 
     public static void main(String[] args) {
@@ -368,7 +410,7 @@ public class App extends Application {
 
     private void handleFishCollision(Fish fish) {
         banque += fish.getValue();
-        moneyCount.setText("Pesos: " + banque);
+        moneyCount.setText("Sousous: " + banque);
 
         stackPane.getChildren().remove(fish);
 
